@@ -32,6 +32,9 @@ class Category(models.Model):
             self.slug = slugify(rand_slug()+"-pickBetter"+self.name)   #Нужно чтобы создавались уникальные слаги
         super(Category, self).save(*args, **kwargs)#Сохранение слага в базе данных вызов метода save из models.Model
 
+    def get_absolute_url(self):
+        return reverse('shop:category_list',args=[self.slug])# Вывод ссылки на категорию с помощью reverse с параметром args = [self.slug]
+
 
 
 
@@ -53,6 +56,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):#Вывод ссылки на продукт
+        return reverse('shop:product_detail',args=[self.slug]) #Вывод ссылки на продукт с помощью reverse с параметром args = [self.slug]
 
 class ProductManager(models.Manager): #Менеджер для отображения только активных продуктов в админке
     def get_queryset(self):
